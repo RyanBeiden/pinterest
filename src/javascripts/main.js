@@ -1,3 +1,8 @@
 import '../styles/main.scss';
+import home from './components/home/home';
 
-console.warn('JS is workin');
+const init = () => {
+  home.buildNavbar();
+};
+
+init();
