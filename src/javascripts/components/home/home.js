@@ -1,7 +1,11 @@
 import './home.scss';
 import utils from '../../helpers/utils';
 
-const buildNavbar = () => {
+const signMeIn = () => {
+  console.warn('hey, sign me in is working!');
+};
+
+const navbarSignIn = () => {
   const domString = `
     <nav class="row">
       <i class="fab fa-pinterest col"></i>
@@ -12,13 +16,14 @@ const buildNavbar = () => {
             <i class="fab fa-google"></i>
           </label>
           <label class="btn btn-secondary">
-            <p> Login</p>
+            <p id="login-button"> Login</p>
           </label>
         </div>
       </div>
     </nav>
   `;
   utils.printToDom('#navbar', domString);
+  $('body').on('click', '#login-button', signMeIn);
 };
 
-export default { buildNavbar };
+export default { navbarSignIn };
