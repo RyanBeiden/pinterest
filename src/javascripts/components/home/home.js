@@ -1,13 +1,16 @@
-import './home.scss';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import utils from '../../helpers/utils';
+import './home.scss';
 
 const signMeIn = () => {
-  console.warn('hey, sign me in is working!');
+  const googleProvider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(googleProvider);
 };
 
 const navbarSignIn = () => {
   const domString = `
-    <nav class="row">
+    <nav id="home" class="row">
       <i class="fab fa-pinterest col"></i>
       <h1 class="col">Pinterest</h1>
       <div class="col d-flex justify-content-end mr-5">
@@ -15,14 +18,14 @@ const navbarSignIn = () => {
           <label class="btn btn-secondary google-icon">
             <i class="fab fa-google"></i>
           </label>
-          <label class="btn btn-secondary">
-            <p id="login-button"> Login</p>
+          <label id="login-button" class="btn btn-secondary">
+            <p> Login</p>
           </label>
         </div>
       </div>
     </nav>
   `;
-  utils.printToDom('#navbar', domString);
+  utils.printToDom('#home-nav', domString);
   $('body').on('click', '#login-button', signMeIn);
 };
 

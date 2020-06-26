@@ -2,11 +2,11 @@
 @import '../home/home.scss';
 
 nav {
-  .log-out-icon {
+  #log-out-icon {
     background-color: $primary-hover !important;
   }
 
-  .log-out-icon:hover {
+  #log-out-icon:hover {
     cursor: initial !important;
   }
 }

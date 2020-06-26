@@ -1,28 +1,31 @@
-import './boards.scss';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import utils from '../../helpers/utils';
+import './boards.scss';
 
-const signMeOut = () => {
-  console.warn('hey, sign me out is working!');
+const signMeOut = (e) => {
+  e.preventDefault();
+  firebase.auth().signOut();
 };
 
 const navbarSignOut = () => {
   const domString = `
-    <nav class="row">
+    <nav id="boards" class="row">
       <i class="fab fa-pinterest col"></i>
-      <h1 class="col hide">Boards</h1>
-      <div class="col d-flex justify-content-end mr-5 hide">
+      <h1 class="col">Boards</h1>
+      <div class="col d-flex justify-content-end mr-5">
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-secondary">
-            <p id="logout-button">Logout </p>
+          <label id="logout-button" class="btn btn-secondary">
+            <p>Logout </p>
           </label>
-          <label class="btn btn-secondary log-out-icon">
+          <label id="log-out-icon" class="btn btn-secondary">
             <i class="fas fa-sign-out-alt"></i>
           </label>
         </div>
       </div>
     </nav>
   `;
-  utils.printToDom('#navbar', domString);
+  utils.printToDom('#boards-nav', domString);
   $('body').on('click', '#logout-button', signMeOut);
 };
 
