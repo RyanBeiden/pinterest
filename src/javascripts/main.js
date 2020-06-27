@@ -7,8 +7,8 @@ import boards from './components/boards/boards';
 
 const init = () => {
   firebase.initializeApp(apiKeys.firebaseConfig);
-  authData.checkLoginStatus();
   home.navbarSignIn();
+  authData.checkLoginStatus();
   boards.navbarSignOut();
 };
 
