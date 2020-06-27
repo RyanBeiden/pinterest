@@ -1,22 +1,27 @@
 {
   "pin1": {
     "imageUrl": "https://i.insider.com/5e67f940235c1804fd14aba9?width=1100&format=jpeg&auto=webp",
-    "pinName": "Best Venue"
+    "pinName": "Best Venue",
+    "boardId": "board1"
   },
   "pin2": {
     "imageUrl": "https://wedding-pictures.onewed.com/match/images/75889/statement-suits-for-grooms-unique-grooms-attire-moschino-2.full.jpg",
-    "pinName": "Great Wedding Suit"
+    "pinName": "Great Wedding Suit",
+    "boardId": "board1"
   },
   "pin3": {
     "imageUrl": "https://www-crazyfamilyadventure-com.exactdn.com/wp-content/uploads/2018/10/Big-Sur-feature-resized-image.jpg?strip=all&lossy=1&ssl=1",
-    "pinName": "Visit Big Sur"
+    "pinName": "Visit Big Sur",
+    "boardId": "board2"
   },
   "pin4": {
     "imageUrl": "https://cdn-ph-web.worldtattoogallery.com/artist--steve-butcher--john-wick-tattoo_20001184601.jpg",
-    "pinName": "Best Tattoo Idea"
+    "pinName": "Best Tattoo Idea",
+    "boardId": "board3"
   },
   "pin5": {
     "imageUrl": "https://acdn.list25.com/wp-content/uploads/2017/05/to-do-list-tattoo.jpg",
-    "pinName": "Convenient Tattoo"
+    "pinName": "Convenient Tattoo",
+    "boardId": "board3"
   }
 }
