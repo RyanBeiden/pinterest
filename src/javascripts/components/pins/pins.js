@@ -21,7 +21,7 @@ const buildPins = () => {
       `;
       utils.printToDom('#pins', domString);
     })
-    .catch((err) => console.error('get pins did not work...', err));
+    .catch((err) => console.error('Getting the pins did not work - ', err));
 };
 
 export default { buildPins };

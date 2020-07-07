@@ -10,3 +10,11 @@ nav {
     cursor: initial !important;
   }
 }
+
+.board-frame {
+  border: 2px solid $secondary-color;
+  border-radius: 1em;
+  padding: 10px;
+  margin: 15px 50px;
+  text-align: center;
+}
