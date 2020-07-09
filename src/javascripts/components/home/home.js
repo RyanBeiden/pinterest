@@ -26,7 +26,36 @@ const navbarSignIn = () => {
     </nav>
   `;
   utils.printToDom('#home-nav', domString);
-  $('body').on('click', '#login-button', signMeIn);
 };
 
-export default { navbarSignIn };
+const navbarSignOut = (typeOfPage) => {
+  const domString = `
+    <nav class="row">
+      <i class="fab fa-pinterest col"></i>
+      <h1 class="col">${typeOfPage}</h1>
+      <div class="col d-flex justify-content-end mr-5">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label id="logout-button" class="btn btn-secondary">
+            <p>Logout </p>
+          </label>
+          <label id="log-out-icon" class="btn btn-secondary">
+            <i class="fas fa-sign-out-alt"></i>
+          </label>
+        </div>
+      </div>
+    </nav>
+  `;
+  utils.printToDom('#boards-nav', domString);
+};
+
+const signMeOut = (e) => {
+  e.preventDefault();
+  firebase.auth().signOut();
+};
+
+export default {
+  navbarSignIn,
+  signMeIn,
+  navbarSignOut,
+  signMeOut,
+};
