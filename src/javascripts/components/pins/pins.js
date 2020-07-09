@@ -3,13 +3,24 @@ import utils from '../../helpers/utils';
 import home from '../home/home';
 import './pins.scss';
 
-const buildPins = (e) => {
-  e.preventDefault();
+const deletePin = (e) => {
+  const deleteId = e.target.closest('button').id;
+  pinsData.deletePin(deleteId)
+    .then(() => {
+      pinsData.getPins()
+        .then(() => {
+          // eslint-disable-next-line no-use-before-define
+          buildPins();
+        })
+        .catch((err) => console.warn('getting new pins did not work -> ', err));
+    })
+    .catch((err) => console.error('Deleting this pin did not work -> ', err));
+};
 
+const buildPins = (boardId) => {
   home.navbarSignOut('Pins');
   $('#pins').removeClass('hide');
 
-  const boardId = e.target.closest('.board-frame').id;
   pinsData.getPins()
     .then((pins) => {
       let domString = `
@@ -20,10 +31,12 @@ const buildPins = (e) => {
         if (pin.boardId === boardId) {
           domString += `
             <div class="pin-div">
+              <button class="btn delete-pin" id="${pin.id}"><i class="fas fa-times-circle"></i></button>
               <h1 class="pin-name">${pin.pinName}</h1>
               <img class="pin-image" src="${pin.imageUrl}">
             </div>
           `;
+          $('body').one('click', `#${pin.id}`, deletePin);
         } else;
       });
       domString += `

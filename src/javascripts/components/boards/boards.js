@@ -4,6 +4,11 @@ import pins from '../pins/pins';
 import utils from '../../helpers/utils';
 import './boards.scss';
 
+const buildBoardsPins = (e) => {
+  const boardId = e.target.closest('.board-frame').id;
+  pins.buildPins(boardId);
+};
+
 const buildBoards = () => {
   home.navbarSignOut('Boards');
   utils.printToDom('#pins', '');
@@ -16,7 +21,7 @@ const buildBoards = () => {
             <h1 class="board-pin-name">${board.boardName}</h1>
           </div>
         `;
-        $('body').on('click', `#${board.id}`, pins.buildPins);
+        $('body').on('click', `#${board.id}`, buildBoardsPins);
       });
       domString += '</div>';
       utils.printToDom('#boards', domString);
