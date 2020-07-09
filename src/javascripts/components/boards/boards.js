@@ -1,5 +1,3 @@
-// import firebase from 'firebase/app';
-// import 'firebase/auth';
 import home from '../home/home';
 import boardsData from '../../helpers/data/boardsData';
 import pins from '../pins/pins';
@@ -18,12 +16,10 @@ const buildBoards = () => {
             <h1 class="board-pin-name">${board.boardName}</h1>
           </div>
         `;
+        $('body').on('click', `#${board.id}`, pins.buildPins);
       });
       domString += '</div>';
       utils.printToDom('#boards', domString);
-      boards.forEach((board) => {
-        $('body').on('click', `#${board.id}`, pins.buildPins);
-      });
     })
     .catch((err) => console.error('Getting the boards did not work - ', err));
 };
