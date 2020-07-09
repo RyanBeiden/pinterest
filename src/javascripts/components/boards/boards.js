@@ -20,6 +20,7 @@ const buildBoards = () => {
         domString += `
           <div class="board-frame" id="${board.id}">
             <h1 class="board-pin-name">${board.boardName}</h1>
+            <button class="btn delete-board btn-danger" id="${board.id}"><i class="fas fa-times-circle"></i> Delete Board</button>
           </div>
         `;
         $('body').on('click', `#${board.id}`, buildBoardsPins);
