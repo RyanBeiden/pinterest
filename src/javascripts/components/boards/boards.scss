@@ -14,7 +14,14 @@ nav {
 .board-frame {
   border: 2px solid $secondary-color;
   border-radius: 1em;
-  padding: 10px;
-  margin: 15px 50px;
+  padding: 50px;
+  margin: 50px;
   text-align: center;
+  transition: 150ms ease-in;
+}
+
+.board-frame:hover {
+  cursor: pointer;
+  background-color: $font-color;
+  color: $background-color;
 }
