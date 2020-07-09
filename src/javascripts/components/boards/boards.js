@@ -5,6 +5,7 @@ import utils from '../../helpers/utils';
 import './boards.scss';
 
 const buildBoardsPins = (e) => {
+  e.preventDefault();
   const boardId = e.target.closest('.board-frame').id;
   pins.buildPins(boardId);
 };

@@ -4,13 +4,17 @@ import home from '../home/home';
 import './pins.scss';
 
 const deletePin = (e) => {
+  e.preventDefault();
+
   const deleteId = e.target.closest('button').id;
+  const boardId = e.target.closest('.board-event').id;
+
   pinsData.deletePin(deleteId)
     .then(() => {
       pinsData.getPins()
         .then(() => {
           // eslint-disable-next-line no-use-before-define
-          buildPins();
+          buildPins(boardId);
         })
         .catch((err) => console.warn('getting new pins did not work -> ', err));
     })
@@ -25,7 +29,7 @@ const buildPins = (boardId) => {
     .then((pins) => {
       let domString = `
         <button class="btn btn-warning back-boards" id="back-to-boards"><i class="fas fa-arrow-left"></i> Back to Boards</button>
-          <div class="d-flex justify-content-center align-items-start">
+          <div class="d-flex justify-content-center align-items-start board-event" id="${boardId}">
       `;
       pins.forEach((pin) => {
         if (pin.boardId === boardId) {
