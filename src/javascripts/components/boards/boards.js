@@ -3,6 +3,7 @@ import boardsData from '../../helpers/data/boardsData';
 import pins from '../pins/pins';
 import utils from '../../helpers/utils';
 import './boards.scss';
+import pinsData from '../../helpers/data/pinsData';
 
 const buildBoardsPins = (e) => {
   e.preventDefault();
@@ -12,17 +13,29 @@ const buildBoardsPins = (e) => {
 
 const deleteBoard = (e) => {
   const deleteId = e.target.classList[0];
-  console.warn(deleteId);
-  // boardsData.deleteBoard(deleteId)
-  //   .then(() => {
-  //     boardsData.getBoards()
-  //       .then(() => {
-  //         // eslint-disable-next-line no-use-before-define
-  //         buildBoards();
-  //       })
-  //       .catch((err) => console.warn('getting new pins did not work -> ', err));
-  //   })
-  //   .catch((err) => console.error('Deleting this pin did not work -> ', err));
+  boardsData.deleteBoard(deleteId)
+    .then(() => {
+      boardsData.getBoards()
+        .then(() => {
+          // eslint-disable-next-line no-use-before-define
+          buildBoards();
+          pinsData.getPins()
+            .then((allPins) => {
+              allPins.forEach((pin) => {
+                if (deleteId === pin.boardId) {
+                  pinsData.deletePin(pin.id)
+                    .then(() => {
+                      pinsData.getPins();
+                    })
+                    .catch((err) => console.error('deleting the board\'s pins did not work', err));
+                } else;
+              });
+            })
+            .catch((err) => console.error('getting the pins when deleting a board did not work ->', err));
+        })
+        .catch((err) => console.warn('reprinting the board did not work -> ', err));
+    })
+    .catch((err) => console.error('Deleting this board did not work -> ', err));
 };
 
 const buildBoards = () => {
