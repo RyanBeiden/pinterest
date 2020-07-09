@@ -7,7 +7,7 @@ const deletePin = (e) => {
   e.preventDefault();
 
   const deleteId = e.target.closest('button').id;
-  const boardId = e.target.closest('.board-event').id;
+  const { boardId } = e.currentTarget.dataset;
 
   pinsData.deletePin(deleteId)
     .then(() => {
@@ -29,13 +29,13 @@ const buildPins = (boardId) => {
     .then((pins) => {
       let domString = `
         <button class="btn btn-warning back-boards" id="back-to-boards"><i class="fas fa-arrow-left"></i> Back to Boards</button>
-          <div class="d-flex justify-content-center align-items-start board-event" id="${boardId}">
+          <div class="d-flex justify-content-center align-items-start board-event">
       `;
       pins.forEach((pin) => {
         if (pin.boardId === boardId) {
           domString += `
             <div class="pin-div">
-              <button class="btn delete-pin" id="${pin.id}"><i class="fas fa-times-circle"></i></button>
+              <button class="btn delete-pin" id="${pin.id}" data-board-id=${boardId}><i class="fas fa-times-circle"></i></button>
               <h1 class="pin-name">${pin.pinName}</h1>
               <img class="pin-image" src="${pin.imageUrl}">
             </div>
