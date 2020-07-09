@@ -1,10 +1,34 @@
+@import '../../../styles/styles';
+
+.pin-div {
+  margin: 50px;
+  border: 4px solid $primary-color;
+  border-radius: .2em;
+}
+
 .pin-image {
-  width: 350px;
-  margin-bottom: 40px;
+  width: 450px;
+  margin: 0;
+  padding: 5px;
 }
 
 .pin-name {
   font-size: 1.5em;
   text-align: center;
-  margin: 50px 0px 10px 0px;
+  padding: 15px 15px 18px 15px;
+  color: $background-color;
+  background-color: $primary-color;
+  margin: 0;
+}
+
+.back-boards {
+  margin: 50px 50px 0px 40px;
+  background-color: $primary-color !important;
+  border-color: $primary-color !important;
+  color: $background-color !important;
+}
+
+.back-boards:hover {
+  background-color: $primary-hover !important;
+  border-color: $primary-hover !important;
 }

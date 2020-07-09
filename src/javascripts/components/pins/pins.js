@@ -13,14 +13,14 @@ const buildPins = (e) => {
   pinsData.getPins()
     .then((pins) => {
       let domString = `
-        <div class="container">
-          <button class="btn btn-warning" id="back-to-boards">Back to Boards</button>
+        <button class="btn btn-warning back-boards" id="back-to-boards"><i class="fas fa-arrow-left"></i> Back to Boards</button>
+          <div class="d-flex justify-content-center align-items-start">
       `;
       pins.forEach((pin) => {
         if (pin.boardId === boardId) {
           domString += `
-            <h1 class="pin-name">${pin.pinName}</h1>
-            <div class="d-flex justify-content-center">
+            <div class="pin-div">
+              <h1 class="pin-name">${pin.pinName}</h1>
               <img class="pin-image" src="${pin.imageUrl}">
             </div>
           `;
