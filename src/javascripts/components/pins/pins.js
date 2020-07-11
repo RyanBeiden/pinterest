@@ -2,6 +2,24 @@ import pinsData from '../../helpers/data/pinsData';
 import utils from '../../helpers/utils';
 import home from '../home/home';
 import './pins.scss';
+import newPin from '../newPin/newPin';
+
+// WIP
+// Currently trying to traverse the DOM to locate the boardId based on existing pin's board ID's that are closest to the event's target
+
+const submitNewPin = (e) => {
+  e.preventDefault();
+
+  console.warn(e.target.closest('.delete-pin').id);
+  // const boardId = e.target;
+  // const newPin = {
+  //   imageUrl: 'hey',
+  //   pinName: $('#custom-pin-name').val(),
+  //   boardId: ,
+  // };
+};
+
+//
 
 const deletePin = (e) => {
   e.preventDefault();
@@ -27,9 +45,9 @@ const buildPins = (boardId) => {
 
   pinsData.getPins()
     .then((pins) => {
+      newPin.showPinForm();
       let domString = `
-        <button class="btn btn-warning back-boards" id="back-to-boards"><i class="fas fa-arrow-left"></i> Back to Boards</button>
-          <div class="d-flex justify-content-center align-items-start board-event">
+        <div class="d-flex justify-content-center align-items-start flex-wrap board-event">
       `;
       pins.forEach((pin) => {
         if (pin.boardId === boardId) {
@@ -52,4 +70,4 @@ const buildPins = (boardId) => {
     .catch((err) => console.error('Getting the pins did not work -> ', err));
 };
 
-export default { buildPins };
+export default { buildPins, submitNewPin };

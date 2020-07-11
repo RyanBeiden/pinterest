@@ -1,0 +1,54 @@
+@import '../../../styles/styles';
+
+.back-boards {
+  margin: 50px 50px 0px 40px;
+  font-family: $secondary-font;
+  background-color: $font-color !important;
+  border-color: $font-color !important;
+  color: $background-color !important;
+}
+
+.back-boards:hover {
+  background-color: $font-hover !important;
+  border-color: $font-hover !important;
+}
+
+.new-pin {
+  font-family: $secondary-font;
+  background-color: $primary-color !important;
+  border-color: $primary-color !important;
+  color: $background-color !important;
+}
+
+.new-pin:hover {
+  background-color: $primary-hover !important;
+  border-color: $primary-hover !important;
+}
+
+.dropleft {
+  margin: 50px 50px 0px 40px;
+  position: absolute;
+  left: 85%;
+}
+
+.dropdown-menu {
+  font-family: $secondary-font !important;
+  width: 300px;
+  padding: 25px;
+}
+
+.dropleft .dropdown-toggle::before {
+  display: none;
+}
+
+.submit-new-pin {
+  font-family: $secondary-font;
+  background-color: $primary-color !important;
+  border-color: $primary-color !important;
+  color: $background-color !important;
+}
+
+.submit-new-pin:hover {
+  background-color: $primary-hover !important;
+  border-color: $primary-hover !important;
+}

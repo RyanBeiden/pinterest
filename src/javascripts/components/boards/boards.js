@@ -40,7 +40,10 @@ const deleteBoard = (e) => {
 
 const buildBoards = () => {
   home.navbarSignOut('Boards');
+
   utils.printToDom('#pins', '');
+  utils.printToDom('#pin-form', '');
+
   boardsData.getBoards()
     .then((boards) => {
       let domString = '<div class="d-flex justify-content-center mt-5">';

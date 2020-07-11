@@ -44,11 +44,11 @@ nav {
 }
 
 .delete-board:hover {
-  background-color: #292929 !important;
-  border-color: #292929 !important;
+  background-color: $font-hover !important;
+  border-color: $font-hover !important;
 }
 
 .delete-board:focus {
-  background-color: #292929 !important;
-  border-color: #292929 !important;
+  background-color: $font-hover !important;
+  border-color: $font-hover !important;
 }
