@@ -1,25 +1,26 @@
 import pinsData from '../../helpers/data/pinsData';
 import utils from '../../helpers/utils';
 import home from '../home/home';
-import './pins.scss';
 import newPin from '../newPin/newPin';
+import './pins.scss';
 
 // WIP
-// Currently trying to traverse the DOM to locate the boardId based on existing pin's board ID's that are closest to the event's target
+// the boardId now is pulled correctly for the new pin, next I either need to figure out how to upload the image to firebase storage and pull
+// its URL, or change that input to just a URL that will be printed. I also need still create the data in firebase before reprinting
 
 const submitNewPin = (e) => {
   e.preventDefault();
 
-  console.warn(e.target.closest('.delete-pin').id);
-  // const boardId = e.target;
-  // const newPin = {
-  //   imageUrl: 'hey',
-  //   pinName: $('#custom-pin-name').val(),
-  //   boardId: ,
-  // };
-};
+  const { boardId } = e.delegateTarget.children[4].children[0].children[0].children[0].dataset;
 
-//
+  const newFormPin = {
+    imageUrl: 'hey',
+    pinName: $('#custom-pin-name').val(),
+    boardId,
+  };
+
+  console.warn(newFormPin);
+};
 
 const deletePin = (e) => {
   e.preventDefault();
@@ -62,6 +63,7 @@ const buildPins = (boardId) => {
         } else;
       });
       domString += `
+          </div>
         </div>
       `;
       utils.printToDom('#pins', domString);
