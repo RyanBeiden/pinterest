@@ -1,3 +1,6 @@
+import firebase from 'firebase/app';
+import 'firebase/storage';
+
 import home from '../home/home';
 import boardsData from '../../helpers/data/boardsData';
 import pins from '../pins/pins';
@@ -23,6 +26,9 @@ const deleteBoard = (e) => {
             .then((allPins) => {
               allPins.forEach((pin) => {
                 if (deleteId === pin.boardId) {
+                  const imagesToDelete = firebase.storage().refFromURL(`${pin.imageUrl}`);
+                  imagesToDelete.delete()
+                    .then().catch((err) => console.error('deleting the pin\'s image did not work -> ', err));
                   pinsData.deletePin(pin.id)
                     .then(() => {
                       pinsData.getPins();
