@@ -1,6 +1,10 @@
 import utils from '../../helpers/utils';
 import './newPin.scss';
 
+function imageInputWatcher() {
+  $('#pin-image-label').html(this.files[0].name);
+}
+
 const showPinForm = () => {
   const domString = `
     <button class="btn btn-warning back-boards" id="back-to-boards"><i class="fas fa-arrow-left"></i> Back to Boards</button>
@@ -14,8 +18,8 @@ const showPinForm = () => {
           </div>
           <div class="form-group">
             <div class="custom-file dropdown-item">
-              <input type="file" class="custom-file-input" id="customFile">
-              <label class="custom-file-label" for="customFile">Choose Image</label>
+              <input type="file" class="custom-file-input" id="custom-pin-image">
+              <label class="custom-file-label" for="custom-pin-image" id="pin-image-label">Choose Image</label>
             </div>
           </div>
           <button type="submit" class="btn btn-danger submit-new-pin" id="submit-pin">Submit</button>
@@ -24,6 +28,7 @@ const showPinForm = () => {
     </div>
   `;
   utils.printToDom('#pin-form', domString);
+  $('body').on('change', '#custom-pin-image', imageInputWatcher);
 };
 
 export default { showPinForm };
