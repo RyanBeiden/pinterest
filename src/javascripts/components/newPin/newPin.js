@@ -9,7 +9,7 @@ const showPinForm = () => {
   const domString = `
     <button class="btn btn-warning back-boards" id="back-to-boards"><i class="fas fa-arrow-left"></i> Back to Boards</button>
     <div class="btn-group dropleft new-pin-position">
-      <button type="button" class="btn btn-danger dropdown-toggle new-pin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-plus"></i> New Pin</button>
+      <button type="button" class="btn btn-danger dropdown-toggle new-pin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-thumbtack"></i> New Pin</button>
       <div class="dropdown-menu">
         <form>
           <div class="form-group">

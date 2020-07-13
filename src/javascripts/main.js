@@ -12,6 +12,7 @@ const clickEvents = () => {
   $('body').on('click', '#logout-button', home.signMeOut);
   $('body').on('click', '#login-button', home.signMeIn);
   $('body').on('click', '#submit-pin', pins.submitNewPin);
+  $('body').on('click', '#submit-board', boards.submitNewBoard);
 };
 
 const init = () => {

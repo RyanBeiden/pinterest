@@ -96,6 +96,7 @@ const buildPins = (boardId) => {
       `;
       utils.printToDom('#pins', domString);
       utils.printToDom('#boards', '');
+      utils.printToDom('#board-form', '');
     })
     .catch((err) => console.error('Getting the pins did not work -> ', err));
 };

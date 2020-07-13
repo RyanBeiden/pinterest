@@ -1,19 +1,30 @@
 import firebase from 'firebase/app';
 import 'firebase/storage';
 
-import home from '../home/home';
 import boardsData from '../../helpers/data/boardsData';
-import pins from '../pins/pins';
-import utils from '../../helpers/utils';
-import './boards.scss';
 import pinsData from '../../helpers/data/pinsData';
 import newBoard from '../newBoard/newBoard';
+import home from '../home/home';
+import utils from '../../helpers/utils';
+import pins from '../pins/pins';
+
+import './boards.scss';
 
 const buildBoardsPins = (e) => {
   e.preventDefault();
   const boardId = e.target.closest('.board-frame').id;
   pins.buildPins(boardId);
 };
+
+// WIP:
+// build function to add new board here
+
+const submitNewBoard = (e) => {
+  e.preventDefault();
+  console.warn(e.target.id);
+};
+
+//
 
 const deleteBoard = (e) => {
   const deleteId = e.target.classList[0];
@@ -75,4 +86,4 @@ const buildBoards = () => {
     .catch((err) => console.error('Getting the boards did not work - ', err));
 };
 
-export default { buildBoards };
+export default { buildBoards, submitNewBoard };
