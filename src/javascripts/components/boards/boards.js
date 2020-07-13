@@ -7,6 +7,7 @@ import pins from '../pins/pins';
 import utils from '../../helpers/utils';
 import './boards.scss';
 import pinsData from '../../helpers/data/pinsData';
+import newBoard from '../newBoard/newBoard';
 
 const buildBoardsPins = (e) => {
   e.preventDefault();
@@ -49,10 +50,11 @@ const buildBoards = () => {
 
   utils.printToDom('#pins', '');
   utils.printToDom('#pin-form', '');
+  newBoard.showBoardForm();
 
   boardsData.getBoards()
     .then((boards) => {
-      let domString = '<div class="d-flex justify-content-center mt-5">';
+      let domString = '<div class="d-flex justify-content-center mt-5 flex-wrap">';
       boards.forEach((board) => {
         domString += `
           <div>

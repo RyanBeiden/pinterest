@@ -8,7 +8,7 @@ function imageInputWatcher() {
 const showPinForm = () => {
   const domString = `
     <button class="btn btn-warning back-boards" id="back-to-boards"><i class="fas fa-arrow-left"></i> Back to Boards</button>
-    <div class="btn-group dropleft">
+    <div class="btn-group dropleft new-pin-position">
       <button type="button" class="btn btn-danger dropdown-toggle new-pin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-plus"></i> New Pin</button>
       <div class="dropdown-menu">
         <form>
@@ -22,7 +22,7 @@ const showPinForm = () => {
               <label class="custom-file-label" for="custom-pin-image" id="pin-image-label">Choose Image</label>
             </div>
           </div>
-          <button type="submit" class="btn btn-danger submit-new-pin" id="submit-pin">Submit</button>
+          <button type="submit" class="btn btn-danger submit-new-pin" id="submit-pin">Add</button>
         </form>
       </div>
     </div>
