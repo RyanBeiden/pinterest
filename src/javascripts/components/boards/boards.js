@@ -1,9 +1,14 @@
-import home from '../home/home';
+import firebase from 'firebase/app';
+import 'firebase/storage';
+
 import boardsData from '../../helpers/data/boardsData';
-import pins from '../pins/pins';
-import utils from '../../helpers/utils';
-import './boards.scss';
 import pinsData from '../../helpers/data/pinsData';
+import newBoard from '../newBoard/newBoard';
+import home from '../home/home';
+import utils from '../../helpers/utils';
+import pins from '../pins/pins';
+
+import './boards.scss';
 
 const buildBoardsPins = (e) => {
   e.preventDefault();
@@ -11,39 +16,61 @@ const buildBoardsPins = (e) => {
   pins.buildPins(boardId);
 };
 
+const submitNewBoard = (e) => {
+  e.preventDefault();
+
+  const boardName = $('#custom-board-name').val();
+  const { uid } = firebase.auth().currentUser;
+
+  const newBoardObject = {
+    boardName,
+    uid,
+  };
+
+  boardsData.addBoard(newBoardObject)
+    .then(() => {
+      // eslint-disable-next-line no-use-before-define
+      buildBoards();
+    })
+    .catch((err) => console.error('adding the new board did not work -> ', err));
+};
+
 const deleteBoard = (e) => {
   const deleteId = e.target.classList[0];
-  boardsData.deleteBoard(deleteId)
-    .then(() => {
-      boardsData.getBoards()
-        .then(() => {
-          // eslint-disable-next-line no-use-before-define
-          buildBoards();
-          pinsData.getPins()
-            .then((allPins) => {
-              allPins.forEach((pin) => {
-                if (deleteId === pin.boardId) {
-                  pinsData.deletePin(pin.id)
+  pinsData.getPins()
+    .then((allPins) => {
+      allPins.forEach((pin) => {
+        if (deleteId === pin.boardId) {
+          const imagesToDelete = firebase.storage().refFromURL(`${pin.imageUrl}`);
+          imagesToDelete.delete()
+            .then();
+          pinsData.deletePin(pin.id)
+            .then(() => {
+              boardsData.deleteBoard(deleteId)
+                .then(() => {
+                  boardsData.getBoards()
                     .then(() => {
-                      pinsData.getPins();
-                    })
-                    .catch((err) => console.error('deleting the board\'s pins did not work', err));
-                } else;
-              });
-            })
-            .catch((err) => console.error('getting the pins when deleting a board did not work ->', err));
-        })
-        .catch((err) => console.warn('reprinting the board did not work -> ', err));
+                      // eslint-disable-next-line no-use-before-define
+                      buildBoards();
+                    });
+                });
+            });
+        } else;
+      });
     })
     .catch((err) => console.error('Deleting this board did not work -> ', err));
 };
 
 const buildBoards = () => {
   home.navbarSignOut('Boards');
+
   utils.printToDom('#pins', '');
+  utils.printToDom('#pin-form', '');
+  newBoard.showBoardForm();
+
   boardsData.getBoards()
     .then((boards) => {
-      let domString = '<div class="d-flex justify-content-center mt-5">';
+      let domString = '<div class="d-flex justify-content-center mt-5 flex-wrap">';
       boards.forEach((board) => {
         domString += `
           <div>
@@ -64,4 +91,4 @@ const buildBoards = () => {
     .catch((err) => console.error('Getting the boards did not work - ', err));
 };
 
-export default { buildBoards };
+export default { buildBoards, submitNewBoard };

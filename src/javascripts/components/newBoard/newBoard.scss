@@ -1,0 +1,45 @@
+@import '../../../styles/styles';
+
+.new-board {
+  margin: 50px 0px 0px 0px;
+  font-family: $secondary-font;
+  color: $background-color !important;
+
+  label {
+    color: $font-color;
+    padding: 6px 15px;
+    margin-right: 0px;
+    font-weight: bold;
+    border: 1px solid lightgray;
+    border-right: none;
+    border-top-left-radius: .3em;
+    border-bottom-left-radius: .3em;
+  }
+
+  button {
+    padding: 6px 15px;
+    border-top-right-radius: .3em !important;
+    border-bottom-right-radius: .3em !important;
+    border-top-left-radius: 0em !important;
+    border-bottom-left-radius: 0em !important;
+  }
+
+  input {
+    border-top-left-radius: .3em !important;
+    border-bottom-left-radius: .3em !important;
+    border-top-right-radius: 0em !important;
+    border-bottom-right-radius: 0em !important;
+  }
+}
+
+.submit-new-board {
+  font-family: $secondary-font;
+  background-color: $primary-color !important;
+  border-color: $primary-color !important;
+  color: $background-color !important;
+}
+
+.submit-new-board:hover {
+  background-color: $primary-hover !important;
+  border-color: $primary-hover !important;
+}

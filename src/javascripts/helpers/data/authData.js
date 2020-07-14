@@ -6,6 +6,7 @@ const homeNav = $('#home-nav');
 const boardsNav = $('#boards-nav');
 const printedPins = $('#pins');
 const printedBoards = $('#boards');
+const boardForm = $('#board-form');
 
 const checkLoginStatus = () => {
   firebase.auth().onAuthStateChanged((user) => {
@@ -13,12 +14,14 @@ const checkLoginStatus = () => {
       homeNav.addClass('hide');
       boardsNav.removeClass('hide');
       printedBoards.removeClass('hide');
+      boardForm.removeClass('hide');
       boards.buildBoards();
     } else {
       homeNav.removeClass('hide');
       boardsNav.addClass('hide');
       printedPins.addClass('hide');
       printedBoards.addClass('hide');
+      boardForm.addClass('hide');
     }
   });
 };
