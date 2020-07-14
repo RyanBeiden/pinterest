@@ -1,5 +1,6 @@
 @import '../../../styles/styles';
 
+
 .back-boards {
   margin: 50px 50px 0px 40px;
   font-family: $secondary-font;
@@ -29,16 +30,16 @@
   margin: 50px 50px 0px 40px;
   position: absolute;
   left: 85%;
+
+  .dropdown-menu {
+    font-family: $secondary-font !important;
+    width: 300px;
+    padding: 25px;
+  }
 }
 
 .fa-thumbtack {
   padding-right: 5px;
-}
-
-.dropdown-menu {
-  font-family: $secondary-font !important;
-  width: 300px;
-  padding: 25px;
 }
 
 .dropleft .dropdown-toggle::before {
