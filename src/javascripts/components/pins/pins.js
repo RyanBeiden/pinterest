@@ -10,7 +10,7 @@ import './pins.scss';
 const submitNewPin = (e) => {
   e.preventDefault();
 
-  const findBoard = e.delegateTarget.children[4].children[0].dataset.emptyBoard;
+  const findBoard = e.delegateTarget.children[5].children[0].dataset.emptyBoard;
   const name = $('#custom-pin-name').val();
   const file = document.getElementById('custom-pin-image').files[0];
   const image = file.name;
@@ -41,7 +41,7 @@ const deletePin = (e) => {
   const deleteId = e.target.closest('button').id;
   const { boardId } = e.currentTarget.dataset;
 
-  // delete image fro firebase storage
+  // delete image from firebase storage
 
   pinsData.getPins()
     .then((pins) => {
