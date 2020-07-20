@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import boards from '../../components/boards/boards';
+import home from '../../components/home/home';
 
 const homeNav = $('#home-nav');
 const boardsNav = $('#boards-nav');
@@ -15,6 +16,7 @@ const checkLoginStatus = () => {
       boardsNav.removeClass('hide');
       printedBoards.removeClass('hide');
       boardForm.removeClass('hide');
+      home.navbarSignOut('Boards');
       boards.buildBoards();
     } else {
       homeNav.removeClass('hide');
@@ -22,6 +24,7 @@ const checkLoginStatus = () => {
       printedPins.addClass('hide');
       printedBoards.addClass('hide');
       boardForm.addClass('hide');
+      home.navbarSignIn();
     }
   });
 };

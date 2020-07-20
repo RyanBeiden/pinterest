@@ -17,9 +17,7 @@ const clickEvents = () => {
 
 const init = () => {
   firebase.initializeApp(apiKeys.firebaseConfig);
-  home.navbarSignIn();
   authData.checkLoginStatus();
-  home.navbarSignOut('Boards');
   clickEvents();
 };
 

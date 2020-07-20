@@ -77,6 +77,20 @@ const deletePin = (e) => {
 // `forEach` for the pins. It could be as simple as some misplaced curly braces or parenthesis, but
 // I am so stumped and need to step away.
 
+const getTempBoards = () => {
+  boardsData.getBoards()
+    .then((allBoards) => {
+      let printBoardsTemp = '';
+      allBoards.forEach((eachBoard) => {
+        printBoardsTemp += `
+          <p class="hide" id="${eachBoard.id}"></p>
+      `;
+        utils.printToDom('#temp-boards', printBoardsTemp);
+      });
+    })
+    .catch((err) => console.error('can\'t get boards for printBoardsTemp', err));
+};
+
 const editPinEvent = (e) => {
   e.preventDefault();
 
@@ -89,6 +103,7 @@ const editPinEvent = (e) => {
 const buildPins = (boardId) => {
   home.navbarSignOut('Pins');
   $('#pins').removeClass('hide');
+  getTempBoards();
 
   pinsData.getPins()
     .then((pins) => {
@@ -110,18 +125,8 @@ const buildPins = (boardId) => {
                     <form>
                       <div class="form-group">
                         <label for="custom-pin-name">Which board should "${pin.pinName}" belong too?</label>
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">`;
-          boardsData.getBoards()
-            .then((allBoards) => {
-              allBoards.forEach((eachBoard) => {
-                domString += `
-                <label class="btn btn-secondary active">
-                  <input type="radio" name="options" id="option1" autocomplete="off" checked> ${eachBoard.boardName}
-                </label>
-              `;
-              });
-            });
-          domString += `
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+
                         </div>
                       </div>
                       <button type="submit" class="btn btn-danger update-pin" id="update-pin" data-board-id=${boardId} data-edit-pin-id=${pin.id}>Update</button>
