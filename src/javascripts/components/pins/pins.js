@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/storage';
 
 import pinsData from '../../helpers/data/pinsData';
-import boardsData from '../../helpers/data/boardsData';
+// import boardsData from '../../helpers/data/boardsData';
 import utils from '../../helpers/utils';
 import home from '../home/home';
 import newPin from '../newPin/newPin';
@@ -77,19 +77,11 @@ const deletePin = (e) => {
 // `forEach` for the pins. It could be as simple as some misplaced curly braces or parenthesis, but
 // I am so stumped and need to step away.
 
-const getTempBoards = () => {
-  boardsData.getBoards()
-    .then((allBoards) => {
-      let printBoardsTemp = '';
-      allBoards.forEach((eachBoard) => {
-        printBoardsTemp += `
-          <p class="hide" id="${eachBoard.id}"></p>
-      `;
-        utils.printToDom('#temp-boards', printBoardsTemp);
-      });
-    })
-    .catch((err) => console.error('can\'t get boards for printBoardsTemp', err));
-};
+// const getTempBoards = () => {
+//   boardsData.getBoards()
+//     .then((tempBoards) => tempBoards)
+//     .catch((err) => console.error('can\'t get boards for printBoardsTemp', err));
+// };
 
 const editPinEvent = (e) => {
   e.preventDefault();
@@ -103,14 +95,16 @@ const editPinEvent = (e) => {
 const buildPins = (boardId) => {
   home.navbarSignOut('Pins');
   $('#pins').removeClass('hide');
-  getTempBoards();
+  let domString = '';
 
+  // boardsData.getBoards()
+  //   .then((tempBoards) => {
   pinsData.getPins()
     .then((pins) => {
       newPin.showPinForm();
-      let domString = `
-        <div class="d-flex justify-content-center align-items-start flex-wrap board-event" data-empty-board=${boardId}>
-      `;
+      domString += `
+  <div class="d-flex justify-content-center align-items-start flex-wrap board-event" data-empty-board=${boardId}>
+`;
       pins.forEach((pin) => {
         if (pin.boardId === boardId) {
           domString += `
@@ -125,7 +119,7 @@ const buildPins = (boardId) => {
                     <form>
                       <div class="form-group">
                         <label for="custom-pin-name">Which board should "${pin.pinName}" belong too?</label>
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <div class="btn-group test btn-group-toggle" data-toggle="buttons">
 
                         </div>
                       </div>
@@ -141,11 +135,13 @@ const buildPins = (boardId) => {
         } else;
       });
       domString += `
-        </div>
+      </div>
       `;
+      //        })
       utils.printToDom('#pins', domString);
       utils.printToDom('#boards', '');
       utils.printToDom('#board-form', '');
+      // console.warn(tempBoards);
     })
     .catch((err) => console.error('Getting the pins did not work -> ', err));
 };
