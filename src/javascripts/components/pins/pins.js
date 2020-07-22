@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/storage';
 
 import pinsData from '../../helpers/data/pinsData';
-// import boardsData from '../../helpers/data/boardsData';
+import boardsData from '../../helpers/data/boardsData';
 import utils from '../../helpers/utils';
 import home from '../home/home';
 import newPin from '../newPin/newPin';
@@ -70,18 +70,9 @@ const deletePin = (e) => {
     .catch((err) => console.error('deleting this pin did not work -> ', err));
 };
 
-// WIP: currently trying to update the board a pin is on through a dropdown form
-// I managed to get the form to dropdown when clicking the edit button for each pin
-// My current issue is correctly pulling each board as an option for thr radio button.
-// I feel like an issue may be with how I am looping through the boards array while inside another
-// `forEach` for the pins. It could be as simple as some misplaced curly braces or parenthesis, but
-// I am so stumped and need to step away.
-
-// const getTempBoards = () => {
-//   boardsData.getBoards()
-//     .then((tempBoards) => tempBoards)
-//     .catch((err) => console.error('can\'t get boards for printBoardsTemp', err));
-// };
+// WIP: the radio buttons finally appear!
+// Now, the buttons do not click and the dropdown disappears when trying to change. So now, I just need to get that working and create the `editPins`
+// function that will update the pin's board in firebase
 
 const editPinEvent = (e) => {
   e.preventDefault();
@@ -97,30 +88,40 @@ const buildPins = (boardId) => {
   $('#pins').removeClass('hide');
   let domString = '';
 
-  // boardsData.getBoards()
-  //   .then((tempBoards) => {
-  pinsData.getPins()
-    .then((pins) => {
-      newPin.showPinForm();
-      domString += `
-  <div class="d-flex justify-content-center align-items-start flex-wrap board-event" data-empty-board=${boardId}>
-`;
-      pins.forEach((pin) => {
-        if (pin.boardId === boardId) {
+  boardsData.getBoards()
+    .then((allBoards) => {
+      pinsData.getPins()
+        .then((pins) => {
+          newPin.showPinForm();
           domString += `
+            <div class="d-flex justify-content-center align-items-start flex-wrap board-event" data-empty-board=${boardId}>
+          `;
+          pins.forEach((pin) => {
+            if (pin.boardId === boardId) {
+              domString += `
             <div class="pin-div">
               <button class="btn delete-pin" id="${pin.id}" data-board-id=${boardId}><i class="fas fa-times-circle"></i></button>
               <h1 class="pin-name">${pin.pinName}</h1>
               <image class="pin-image" src="${pin.imageUrl}">
               <div class="d-flex justify-content-end">
                 <div class="btn-group dropleft">
-                <button type="button" class="dropdown-toggle btn edit-pin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-edit"></i></button>
-                  <div class="dropdown-menu edit-pin-form">
-                    <form>
-                      <div class="form-group">
-                        <label for="custom-pin-name">Which board should "${pin.pinName}" belong too?</label>
-                        <div class="btn-group test btn-group-toggle" data-toggle="buttons">
+                  <button type="button" class="dropdown-toggle btn edit-pin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-edit"></i></button>
+                    <div class="dropdown-menu edit-pin-form">
+                      <form>
+                        <div class="form-group">
+                          <label for="custom-pin-name">Which board should "${pin.pinName}" belong too?</label>
+                          <div class="btn-group test btn-group-toggle" data-toggle="buttons">`;
 
+              allBoards.forEach((board) => {
+                domString += `
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="board-radio" name="${board.id}" class="custom-control-input" ${boardId === board.id ? 'checked' : ''}>
+                  <label class="custom-control-label" for="board-radio">${board.boardName}</label>
+                </div>
+                `;
+              });
+
+              domString += `
                         </div>
                       </div>
                       <button type="submit" class="btn btn-danger update-pin" id="update-pin" data-board-id=${boardId} data-edit-pin-id=${pin.id}>Update</button>
@@ -130,18 +131,17 @@ const buildPins = (boardId) => {
               </div>
             </div>
           `;
-          $('body').one('click', `#${pin.id}`, deletePin);
-          $('body').one('click', '#update-pin', editPinEvent);
-        } else;
-      });
-      domString += `
-      </div>
-      `;
-      //        })
-      utils.printToDom('#pins', domString);
-      utils.printToDom('#boards', '');
-      utils.printToDom('#board-form', '');
-      // console.warn(tempBoards);
+              $('body').one('click', `#${pin.id}`, deletePin);
+              $('body').one('click', '#update-pin', editPinEvent);
+            } else;
+          });
+          domString += `
+            </div>
+          `;
+          utils.printToDom('#pins', domString);
+          utils.printToDom('#boards', '');
+          utils.printToDom('#board-form', '');
+        });
     })
     .catch((err) => console.error('Getting the pins did not work -> ', err));
 };
