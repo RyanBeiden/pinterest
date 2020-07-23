@@ -18,7 +18,8 @@ const navbarSignIn = () => {
         <h1>Pinterest</h1>
       </div>
       <div class="navbar-right">
-        <img class="google-sign-in" id="login-button" src="./src/assets/btn_google_signin_light_normal_web@2x.png">
+        <img class="google-sign-in" id="login-button"
+          src="https://firebasestorage.googleapis.com/v0/b/pinterest-1e98b.appspot.com/o/assets%2Fbtn_google_signin_light_normal_web%402x.png?alt=media&token=e3bf1fd3-7b61-4fb2-b0a9-b509e34ee140">
       </div>
     </nav>
   `;
