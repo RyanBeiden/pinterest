@@ -70,17 +70,32 @@ const deletePin = (e) => {
     .catch((err) => console.error('deleting this pin did not work -> ', err));
 };
 
-// WIP: the radio buttons finally appear!
-// Now, the buttons do not click and the dropdown disappears when trying to change. So now, I just need to get that working and create the `editPins`
-// function that will update the pin's board in firebase
+// wip / I can't seem to figure out how to pull the selected pin's imageUrl and pinName
+// since the boardId is the only thing changing. I would ideally like to just update the boardId and not the other stuff
+// without it removing that other stuff
 
 const editPinEvent = (e) => {
   e.preventDefault();
 
-  const editId = e.target.closest('button').dataset.editPinId;
-  const { boardId } = e.currentTarget.dataset;
+  // const editId = e.target.closest('button').dataset.editPinId;
+  const boardId = $('input[type=radio]:checked')[0].dataset.editBoardId;
+  const imageUrl = e.target.closest('image').id;
+  const pinName = '';
 
-  console.warn(editId, boardId);
+  const newBoardId = {
+    boardId,
+    imageUrl,
+    pinName,
+  };
+
+  console.warn(newBoardId);
+
+  // pinsData.updatePin(editId, newBoardId)
+  //   .then(() => {
+  //   // eslint-disable-next-line no-use-before-define
+  //     buildPins();
+  //   })
+  //   .catch((err) => console.error('updating the pin\'s boards did not work -> ', err));
 };
 
 const buildPins = (boardId) => {
@@ -102,29 +117,27 @@ const buildPins = (boardId) => {
             <div class="pin-div">
               <button class="btn delete-pin" id="${pin.id}" data-board-id=${boardId}><i class="fas fa-times-circle"></i></button>
               <h1 class="pin-name">${pin.pinName}</h1>
-              <image class="pin-image" src="${pin.imageUrl}">
+              <image id="${pin.imageUrl}" class="pin-image" src="${pin.imageUrl}">
               <div class="d-flex justify-content-end">
-                <div class="btn-group dropleft">
+                <div class="btn-group dropdown">
                   <button type="button" class="dropdown-toggle btn edit-pin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-edit"></i></button>
-                    <div class="dropdown-menu edit-pin-form">
+                    <div class="dropdown-menu dropdown-menu-right edit-pin-form">
                       <form>
-                        <div class="form-group">
-                          <label for="custom-pin-name">Which board should "${pin.pinName}" belong too?</label>
-                          <div class="btn-group test btn-group-toggle" data-toggle="buttons">`;
+                        <div class="form-group d-block">
+                          <label for="custom-pin-name">Which board should <strong>${pin.pinName}</strong> belong too?</label>`;
 
               allBoards.forEach((board) => {
                 domString += `
                 <div class="custom-control custom-radio">
-                  <input type="radio" id="board-radio" name="${board.id}" class="custom-control-input" ${boardId === board.id ? 'checked' : ''}>
-                  <label class="custom-control-label" for="board-radio">${board.boardName}</label>
+                  <input type="radio" data-edit-board-id=${board.id} id="${board.id}-radio" name="customRadio" class="custom-control-input" ${boardId === board.id ? 'checked' : ''}>
+                  <label class="custom-control-label" for="${board.id}-radio">${board.boardName}</label>
                 </div>
                 `;
               });
 
               domString += `
-                        </div>
                       </div>
-                      <button type="submit" class="btn btn-danger update-pin" id="update-pin" data-board-id=${boardId} data-edit-pin-id=${pin.id}>Update</button>
+                      <button type="submit" class="btn btn-danger update-pin" id="update-pin" data-edit-pin-id=${pin.id}>Update</button>
                     </form>
                   </div>
                 </div>
