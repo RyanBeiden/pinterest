@@ -1,11 +1,20 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import userData from '../../helpers/data/userData';
 import utils from '../../helpers/utils';
 import './home.scss';
 
 const signMeIn = () => {
   const googleProvider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(googleProvider);
+  firebase.auth().signInWithPopup(googleProvider)
+    .then((user) => {
+      const newUser = {
+        uid: user.user.uid,
+      };
+      userData.addUser(newUser);
+    })
+    .then(() => {})
+    .catch((err) => console.error(err));
 };
 
 const navbarSignIn = () => {
