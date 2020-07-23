@@ -9,7 +9,7 @@ const signMeIn = () => {
   firebase.auth().signInWithPopup(googleProvider)
     .then((user) => {
       const newUser = {
-        uid: user.user.uid,
+        uid: user.uid,
       };
       userData.addUser(newUser);
     })
