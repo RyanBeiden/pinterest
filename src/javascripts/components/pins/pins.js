@@ -2,10 +2,27 @@ import firebase from 'firebase/app';
 import 'firebase/storage';
 
 import pinsData from '../../helpers/data/pinsData';
+import boardsData from '../../helpers/data/boardsData';
 import utils from '../../helpers/utils';
 import home from '../home/home';
 import newPin from '../newPin/newPin';
 import './pins.scss';
+
+// Put current Board's name in navbar
+
+const currentPinHeader = (boardId) => {
+  boardsData.getBoards()
+    .then((boards) => {
+      boards.forEach((board) => {
+        if (boardId === board.id) {
+          home.navbarSignOut(`${board.boardName}`);
+        }
+      });
+    })
+    .catch((err) => console.error(err));
+};
+
+// Adds a new pin to firebase and firebase storage
 
 const submitNewPin = (e) => {
   e.preventDefault();
@@ -69,34 +86,91 @@ const deletePin = (e) => {
     .catch((err) => console.error('deleting this pin did not work -> ', err));
 };
 
-const buildPins = (boardId) => {
-  home.navbarSignOut('Pins');
-  $('#pins').removeClass('hide');
+// Edits and updates pin's board in firebase and reprints
 
-  pinsData.getPins()
-    .then((pins) => {
-      newPin.showPinForm();
-      let domString = `
-        <div class="d-flex justify-content-center align-items-start flex-wrap board-event" data-empty-board=${boardId}>
-      `;
-      pins.forEach((pin) => {
-        if (pin.boardId === boardId) {
+const editPinEvent = (e) => {
+  e.preventDefault();
+
+  const pinId = e.target.closest('button').dataset.editPinId;
+  const boardId = $('input[type=radio]:checked')[0].dataset.editBoardId;
+  const imageUrl = e.target.closest('button').dataset.editPinImageUrl;
+  const pinName = e.target.closest('button').dataset.editPinName;
+
+  const newPinObj = {
+    boardId,
+    imageUrl,
+    pinName,
+  };
+
+  pinsData.updatePin(pinId, newPinObj)
+    .then(() => {
+      boardsData.getBoards();
+      // eslint-disable-next-line no-use-before-define
+      buildPins(boardId);
+    })
+    .catch((err) => console.error('updating the pin\'s boards did not work -> ', err));
+};
+
+// This creates the pins page
+
+const buildPins = (boardId) => {
+  currentPinHeader(boardId);
+  $('#pins').removeClass('hide');
+  let domString = '';
+
+  boardsData.getBoards()
+    .then((allBoards) => {
+      pinsData.getPins()
+        .then((pins) => {
+          newPin.showPinForm();
           domString += `
+            <div class="d-flex justify-content-center align-items-start flex-wrap board-event" data-empty-board=${boardId}>
+          `;
+          pins.forEach((pin) => {
+            if (pin.boardId === boardId) {
+              domString += `
             <div class="pin-div">
               <button class="btn delete-pin" id="${pin.id}" data-board-id=${boardId}><i class="fas fa-times-circle"></i></button>
               <h1 class="pin-name">${pin.pinName}</h1>
-              <image class="pin-image" src="${pin.imageUrl}">
+              <image id="${pin.imageUrl}" class="pin-image" src="${pin.imageUrl}">
+              <div class="d-flex justify-content-end">
+                <div class="btn-group dropdown">
+                  <button type="button" class="dropdown-toggle btn edit-pin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-edit"></i></button>
+                    <div class="dropdown-menu dropdown-menu-right edit-pin-form">
+                      <form>
+                        <div class="form-group d-block">
+                          <label for="custom-pin-name">Which board should <strong>${pin.pinName}</strong> belong too?</label>`;
+
+              allBoards.forEach((board) => {
+                domString += `
+                <div class="custom-control custom-radio">
+                  <input type="radio" data-edit-board-id=${board.id} id="${board.id}-radio" name="customRadio" class="custom-control-input" ${boardId === board.id ? 'checked' : ''}>
+                  <label class="custom-control-label" for="${board.id}-radio">${board.boardName}</label>
+                </div>
+                `;
+              });
+
+              domString += `
+                      </div>
+                      <button type="submit" class="btn btn-danger update-pin" id="update-pin" 
+                      data-edit-pin-id=${pin.id} data-edit-pin-image-url=${pin.imageUrl} data-edit-pin-name="${pin.pinName}">Update</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
           `;
-          $('body').one('click', `#${pin.id}`, deletePin);
-        } else;
-      });
-      domString += `
-        </div>
-      `;
-      utils.printToDom('#pins', domString);
-      utils.printToDom('#boards', '');
-      utils.printToDom('#board-form', '');
+              $('body').one('click', `#${pin.id}`, deletePin);
+              $('body').one('click', '#update-pin', editPinEvent);
+            } else;
+          });
+          domString += `
+            </div>
+          `;
+          utils.printToDom('#pins', domString);
+          utils.printToDom('#boards', '');
+          utils.printToDom('#board-form', '');
+        });
     })
     .catch((err) => console.error('Getting the pins did not work -> ', err));
 };
