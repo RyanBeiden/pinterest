@@ -8,6 +8,22 @@ import home from '../home/home';
 import newPin from '../newPin/newPin';
 import './pins.scss';
 
+// Put current Board's name in navbar
+
+const currentPinHeader = (boardId) => {
+  boardsData.getBoards()
+    .then((boards) => {
+      boards.forEach((board) => {
+        if (boardId === board.id) {
+          home.navbarSignOut(`${board.boardName}`);
+        }
+      });
+    })
+    .catch((err) => console.error(err));
+};
+
+// Adds a new pin to firebase and firebase storage
+
 const submitNewPin = (e) => {
   e.preventDefault();
 
@@ -70,36 +86,35 @@ const deletePin = (e) => {
     .catch((err) => console.error('deleting this pin did not work -> ', err));
 };
 
-// wip / I can't seem to figure out how to pull the selected pin's imageUrl and pinName
-// since the boardId is the only thing changing. I would ideally like to just update the boardId and not the other stuff
-// without it removing that other stuff
+// Edits and updates pin's board in firebase and reprints
 
 const editPinEvent = (e) => {
   e.preventDefault();
 
-  // const editId = e.target.closest('button').dataset.editPinId;
+  const pinId = e.target.closest('button').dataset.editPinId;
   const boardId = $('input[type=radio]:checked')[0].dataset.editBoardId;
-  const imageUrl = e.target.closest('image').id;
-  const pinName = '';
+  const imageUrl = e.target.closest('button').dataset.editPinImageUrl;
+  const pinName = e.target.closest('button').dataset.editPinName;
 
-  const newBoardId = {
+  const newPinObj = {
     boardId,
     imageUrl,
     pinName,
   };
 
-  console.warn(newBoardId);
-
-  // pinsData.updatePin(editId, newBoardId)
-  //   .then(() => {
-  //   // eslint-disable-next-line no-use-before-define
-  //     buildPins();
-  //   })
-  //   .catch((err) => console.error('updating the pin\'s boards did not work -> ', err));
+  pinsData.updatePin(pinId, newPinObj)
+    .then(() => {
+      boardsData.getBoards();
+      // eslint-disable-next-line no-use-before-define
+      buildPins(boardId);
+    })
+    .catch((err) => console.error('updating the pin\'s boards did not work -> ', err));
 };
 
+// This creates the pins page
+
 const buildPins = (boardId) => {
-  home.navbarSignOut('Pins');
+  currentPinHeader(boardId);
   $('#pins').removeClass('hide');
   let domString = '';
 
@@ -137,7 +152,8 @@ const buildPins = (boardId) => {
 
               domString += `
                       </div>
-                      <button type="submit" class="btn btn-danger update-pin" id="update-pin" data-edit-pin-id=${pin.id}>Update</button>
+                      <button type="submit" class="btn btn-danger update-pin" id="update-pin" 
+                      data-edit-pin-id=${pin.id} data-edit-pin-image-url=${pin.imageUrl} data-edit-pin-name="${pin.pinName}">Update</button>
                     </form>
                   </div>
                 </div>
