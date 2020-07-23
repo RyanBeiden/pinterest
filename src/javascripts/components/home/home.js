@@ -10,18 +10,15 @@ const signMeIn = () => {
 
 const navbarSignIn = () => {
   const domString = `
-    <nav id="home" class="row">
-      <i class="fab fa-pinterest col"></i>
-      <h1 class="col">Pinterest</h1>
-      <div class="col d-flex justify-content-end mr-5">
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-secondary google-icon">
-            <i class="fab fa-google"></i>
-          </label>
-          <label id="login-button" class="btn btn-secondary">
-            <p> Login</p>
-          </label>
-        </div>
+    <nav>
+      <div class="navbar-left">
+        <i class="fab fa-pinterest col"></i>
+      </div>
+      <div class="navbar-center">
+        <h1>Pinterest</h1>
+      </div>
+      <div class="navbar-right">
+        <img class="google-sign-in" id="login-button" src="./src/assets/btn_google_signin_light_normal_web@2x.png">
       </div>
     </nav>
   `;
@@ -30,18 +27,16 @@ const navbarSignIn = () => {
 
 const navbarSignOut = (typeOfPage) => {
   const domString = `
-    <nav class="row">
-      <i class="fab fa-pinterest col"></i>
-      <h1 class="col">${typeOfPage}</h1>
-      <div class="col d-flex justify-content-end mr-5">
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label id="logout-button" class="btn btn-secondary">
-            <p>Logout </p>
-          </label>
-          <label id="log-out-icon" class="btn btn-secondary">
-            <i class="fas fa-sign-out-alt"></i>
-          </label>
-        </div>
+    <nav>
+      <div class="navbar-left">
+        <i class="fab fa-pinterest col"></i>
+      </div>
+      <div class="navbar-center">
+        <h1>${typeOfPage}</h1>
+      </div>
+      <div class="navbar-right">
+        <img class="profile-pic" src="${firebase.auth().currentUser.photoURL}">
+        <button id="logout-button" class="btn btn-secondary">Logout <i class="fas fa-arrow-right pl-1"></i></button>
       </div>
     </nav>
   `;
