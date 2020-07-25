@@ -45,8 +45,8 @@ const navbarSignOut = (typeOfPage) => {
         <h1>${typeOfPage}</h1>
       </div>
       <div class="navbar-right">
-        <img class="profile-pic" src="${firebase.auth().currentUser.photoURL}">
         <button id="logout-button" class="btn btn-secondary">Logout <i class="fas fa-arrow-right pl-1"></i></button>
+        <img class="profile-pic" src="${firebase.auth().currentUser.photoURL}">
       </div>
     </nav>
   `;

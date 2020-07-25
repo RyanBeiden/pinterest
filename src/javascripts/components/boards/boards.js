@@ -70,7 +70,7 @@ const buildBoards = () => {
 
   boardsData.getBoards()
     .then((boards) => {
-      let domString = '<div class="d-flex justify-content-center mt-5 flex-wrap">';
+      let domString = '<div class="d-flex justify-content-center mt-5 flex-wrap add-board-form">';
       boards.forEach((board) => {
         if (firebase.auth().currentUser.uid === board.uid) {
           domString += `

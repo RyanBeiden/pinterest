@@ -43,7 +43,7 @@ nav {
         border: 2px solid $font-color;
         border-radius: 2em;
 
-        margin-right: 10px;
+        margin-left: 15px;
       }
 
       .btn {
@@ -84,7 +84,7 @@ nav {
 
 // Tablet
 
-@media only screen and (max-width: 768px) and (min-width: 455px) {
+@media only screen and (max-width: 768px) and (min-width: 463px) {
   nav {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -96,7 +96,7 @@ nav {
     .navbar-center {
       grid-area: navbar-center;
 
-      margin-top: 25px;
+      margin-top: 15px;
     }
     .navbar-right {
       grid-area: navbar-right;
@@ -110,11 +110,15 @@ nav {
 
 // Phone
 
-@media only screen and (max-width: 454px) {
+@media only screen and (max-width: 462px) {
   nav {
     display: grid;
     grid-template-columns: 1fr 4fr;
     grid-template-rows: auto;
+
+    grid-template-areas: 
+    "navbar-left navbar-right"
+    "navbar-center navbar-center";
 
     .navbar-left {
       grid-area: navbar-left;
@@ -124,20 +128,22 @@ nav {
     .navbar-center {
       grid-area: navbar-center;
 
-      margin-top: 25px;
+      margin-top: 5px;
     }
     .navbar-right {
       grid-area: navbar-right;
 
       margin-right: 15px;
 
+      #logout-button {
+        font-size: .8em !important;
+        padding-bottom: 8px !important;
+      }
+
       .profile-pic {
-        display: none;
+        width: 45px;
+        height: 45px;
       }
     }
-
-    grid-template-areas: 
-    "navbar-left navbar-right"
-    "navbar-center navbar-center";
   }
 }
