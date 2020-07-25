@@ -11,14 +11,22 @@ The User can reassign a pin to a different board, delete a pin, or even delete a
 #### Signing In:
 ![Pinterest Sign In](./src/assets/pinterest-site-demo-1.gif)
 
+---
+
 #### Adding a New Board:
 ![Adding a New Board](./src/assets/pinterest-site-demo-2.gif)
+
+---
 
 #### Adding a New Pin:
 ![Adding a New Pin](./src/assets/pinterest-site-demo-3.gif)
 
+---
+
 #### Reassigning a Pin:
 ![Reassigning a Pin](./src/assets/pinterest-site-demo-4.gif)
+
+---
 
 #### Deleting Pins & Boards:
 ![Pinterest Sign In](./src/assets/pinterest-site-demo-5.gif)
